@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kadına Destek – Şiddete Karşı Birlikte</title>
+    <style>
+        :root{
+            --bg:#0f0a1f;
+            --bg2:#1a1330;
+            --surface:rgba(255,255,255,0.06);
+            --border:rgba(255,255,255,0.18);
+            --text:#f3f4f6;
+            --muted:#c7c9d3;
+            --primary:#a855f7; /* mor */
+            --accent:#ec4899;  /* pembe */
+            --ok:#22c55e;
+            --radius:16px;
+            --shadow:0 12px 40px rgba(0,0,0,.35);
+        }
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{
+            margin:0;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+            color:var(--text);
+            background:
+                radial-gradient(900px 500px at 100% 0%, #2a1f4a 0%, transparent 55%),
+                radial-gradient(1200px 600px at 0% 100%, #1e2a4f 0%, transparent 60%),
+                linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+        }
+
+        .container{width:min(1100px,100%); margin:0 auto; padding:24px;}
+
+        /* Hero */
+        .hero{
+            padding:48px 24px;
+            border-radius:24px;
+            background:
+                linear-gradient(135deg, rgba(168,85,247,0.25), rgba(236,72,153,0.25)),
+                linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+            border:1px solid var(--border);
+            box-shadow:var(--shadow);
+            display:grid; gap:18px;
+            text-align:center;
+        }
+        .kicker{color:var(--muted); letter-spacing:.14em; text-transform:uppercase; font-weight:700; font-size:12px}
+        .title{font-weight:900; font-size:clamp(26px, 4vw, 42px); line-height:1.1}
+        .title .grad{
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text; background-clip:text; color:transparent;
+        }
+        .slogans{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center }
+        .tag{ font-size:12px; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,0.07); border:1px solid var(--border); }
+
+        /* Sections */
+        .section{ margin-top:28px; }
+        .section .head{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px }
+        .section h2{ margin:0; font-size:20px; letter-spacing:.2px }
+        .note{ color:var(--muted); font-size:13px }
+
+        /* Timeline */
+        .timeline{ position:relative; padding-left:20px; }
+        .timeline:before{ content:""; position:absolute; left:8px; top:0; bottom:0; width:2px; background:linear-gradient(180deg, rgba(168,85,247,.6), rgba(236,72,153,.6)); border-radius:2px }
+        .year{
+            position:relative; margin:14px 0 18px 0; list-style:none;
+            background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:14px; box-shadow:var(--shadow);
+        }
+        .year:before{ content:""; position:absolute; left:-16px; top:18px; width:10px; height:10px; border-radius:50%; background:linear-gradient(90deg, var(--primary), var(--accent)); box-shadow:0 0 0 4px rgba(168,85,247,0.25) }
+        .year-head{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+        .badge{ font-size:12px; padding:4px 8px; border-radius:999px; background:linear-gradient(90deg, var(--primary), var(--accent)); color:#0d0a14; font-weight:800 }
+        .year-title{ font-weight:800; letter-spacing:.3px }
+        .items{ display:grid; gap:8px; margin-top:10px }
+        .item{ background:rgba(255,255,255,0.05); border:1px dashed var(--border); border-radius:12px; padding:10px 12px; display:grid; gap:4px }
+        .item b{ color:#fff }
+        .item small{ color:var(--muted) }
+
+        /* Resources */
+        .grid{ display:grid; gap:12px; grid-template-columns:1fr 1fr 1fr }
+        @media(max-width:900px){ .grid{ grid-template-columns:1fr } }
+        .card{ background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:16px; display:grid; gap:6px }
+        .card h3{ margin:0; font-size:16px }
+        .ok{ color:var(--ok) }
+        .muted{ color:var(--muted) }
+
+        /* Data table */
+        .table-wrap{ background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); overflow:auto }
+        table{ width:100%; border-collapse:separate; border-spacing:0 }
+        thead th{ position:sticky; top:0; background:rgba(255,255,255,0.06); backdrop-filter:blur(6px); }
+        th, td{ padding:10px 12px; border-bottom:1px solid var(--border); text-align:left; font-size:14px }
+        thead th:first-child{ border-top-left-radius:16px }
+        thead th:last-child{ border-top-right-radius:16px }
+        tbody tr:last-child td:first-child{ border-bottom-left-radius:16px }
+        tbody tr:last-child td:last-child{ border-bottom-right-radius:16px }
+        tbody tr:nth-child(odd){ background:rgba(255,255,255,0.03) }
+        .pill{ display:inline-block; padding:2px 8px; border-radius:999px; border:1px solid var(--border); background:rgba(255,255,255,0.05); font-variant-numeric:tabular-nums }
+        .src{ color:#fde68a }
+
+        /* Footer */
+        footer{ margin:28px 0 10px; color:var(--muted); font-size:12px; text-align:center }
+        a{ color:#fde68a; text-decoration:none }
+        a:hover{ text-decoration:underline }
+    </style>
+    <!-- Bu sayfa bilgilendirme ve farkındalık içindir. Kişisel veriler ve gerçek isimler kullanılmaz. -->
+    <!-- Vakalar örnek ve anonimdir; gerçek kişi veya olaya atıf içermez. -->
+    <!-- Yardıma ihtiyacınız varsa lütfen resmi acil hatları arayınız. -->
+    <!-- Sadece HTML ve CSS kullanılmıştır. -->
+    <!-- İçerik bakımından hassastır. Nazik ve saygılı bir dil tercih edilmiştir. -->
+</head>
+<body>
+    <div class="container">
+        <header class="hero" aria-label="Kadına destek ve farkındalık">
+            <div class="kicker">Şiddete karşı birlikte</div>
+            <div class="title">Kadına şiddete <span class="grad">dur</span> diyelim. Birlikte güçlüyüz.</div>
+            <div class="slogans" aria-label="Destek sloganları">
+                <div class="tag">Yalnız değilsin</div>
+                <div class="tag">Güvende olma hakkın var</div>
+                <div class="tag">Şiddet kader değil</div>
+                <div class="tag">Ses ver, gör, destek ol</div>
+                <div class="tag">Dayanışma yaşatır</div>
+            </div>
+            <div class="note">Aşağıdaki zaman çizelgesi, 2010'dan günümüze kadar örnek ve anonim vakaları, farkındalık çalışmalarını ve dayanışma adımlarını yıl bazında özetler.</div>
+        </header>
+
+        <section class="section" aria-labelledby="timeline-title">
+            <div class="head">
+                <h2 id="timeline-title">2010'dan günümüze – Zaman Çizelgesi</h2>
+                <div class="note">İçerikler örnektir; gerçek kişi/olay bilgisi içermez.</div>
+            </div>
+            <ol class="timeline" aria-label="Yıllara göre anonim vakalar ve çalışmalar">
+                <!-- 2010 - 2025 örnek, kısa ve anonim maddeler -->
+                <li class="year">
+                    <div class="year-head">
+                        <div class="year-title">2010</div>
+                        <div class="badge">Farkındalık</div>
+                    </div>
+                    <div class="items">
+                        <div class="item"><b>Toplumsal farkındalık</b> için yerel atölyeler hayata geçirildi. <small>Gönüllülerin desteğiyle</small></div>
+                        <div class="item"><b>Anonim vaka</b>: Destek hattı yönlendirmesi ile güvende konaklama sağlandı.</div>
+                    </div>
+                </li>
+                <li class="year">
+                    <div class="year-head"><div class="year-title">2011</div><div class="badge">Dayanışma</div></div>
+                    <div class="items">
+                        <div class="item"><b>Destek ağları</b> kuruldu; rehber ve broşürler dağıtıldı.</div>
+                        <div class="item"><b>Anonim vaka</b>: Hukuki danışmanlıkla koruma tedbiri başvurusu yapıldı.</div>
+                    </div>
+                </li>
+                <li class="year">
+                    <div class="year-head"><div class="year-title">2012</div><div class="badge">Haklar</div></div>
+                    <div class="items">
+                        <div class="item"><b>Hak temelli yaklaşım</b> eğitimleri yaygınlaştı.</div>
+                        <div class="item"><b>Anonim vaka</b>: Psikososyal destek süreci başlatıldı.</div>
+                    </div>
+                </li>
+                <li class="year"><div class="year-head"><div class="year-title">2013</div><div class="badge">Erişim</div></div><div class="items"><div class="item"><b>Bilgi erişimi</b> için rehber siteler hazırlandı.</div><div class="item"><b>Anonim vaka</b>: Acil yardım hattı çağrısı sonrası güvenli çıkış planı.</div></div></li>
+                <li class="year"><div class="year-head"><div class="year-title">2014</div><div class="badge">Güçlenme</div></div><div class="items"><div class="item"><b>Güçlenme atölyeleri</b> ve danışmanlık merkezleri arttı.</div><div class="item"><b>Anonim vaka</b>: Barınma ve geçici ekonomik destek yönlendirmesi.</div></div></li>
+                <li class="year"><div class="year-head"><div class="year-title">2015</div><div class="badge">Ses</div></div><div class="items"><div class="item"><b>Şiddete karşı ses</b> veren kampanyalar düzenlendi.</div><div class="item"><b>Anonim vaka</b>: Ziyaret kısıtlaması ve tedbir kararları bilgilendirmesi.</div></div></li>
+                <li class="year"><div class="year-head"><div class="year-title">2016</div><div class="badge">Ağ</div></div><div class="items"><div class="item"><b>Yerel dayanışma ağları</b> kadınlara rehberlik sundu.</div><div class="item"><b>Anonim vaka</b>: Çocukların güvenliği için refakat destekleri.</div></div></li>
+                <li class="year"><div class="year-head"><div class="year-title">2017</div><div class="badge">Eğitim</div></div><div class="items"><div class="item"><b>Okullarda farkındalık</b> çalışmaları ve seminerler.</div><div class="item"><b>Anonim vaka</b>: Danışmanlıkla iş ve barınma planı yapıldı.</div></div></li>
+                <li class="year"><div class="year-head"><div class="year-title">2018</div><div class="badge">Destek</div></div><div class="items"><div class="item"><b>Kurumsal işbirlikleri</b> ile başvuru yolları kolaylaştırıldı.</div><div class="item"><b>Anonim vaka</b>: Kimlik gizliliği ve güvenli iletişim araçları tanıtıldı.</div></div></li>
+                <li class="year"><div class="year-head"><div class="year-title">2019</div><div class="badge">Görünürlük</div></div><div class="items"><div class="item"><b>Kamu spotları</b> ve rehber içerikler yayımlandı.</div><div class="item"><b>Anonim vaka</b>: Psikolojik danışmanlıkla travma odaklı destek.</div></div></li>
+                <li class="year"><div class="year-head"><div class="year-title">2020</div><div class="badge">Dayanışma</div></div><div class="items"><div class="item"><b>Uzaktan danışmanlık</b> ve acil yönlendirmeler artırıldı.</div><div class="item"><b>Anonim vaka</b>: Dijital güvenlik ve acil çıkış planı oluşturuldu.</div></div></li>
+                <li class="year"><div class="year-head"><div class="year-title">2021</div><div class="badge">Erişim</div></div><div class="items"><div class="item"><b>Erişilebilir kaynaklar</b> bir araya getirildi.</div><div class="item"><b>Anonim vaka</b>: Hukuki başvurular için adım adım rehberlik.</div></div></li>
+                <li class="year"><div class="year-head"><div class="year-title">2022</div><div class="badge">Güçlenme</div></div><div class="items"><div class="item"><b>Psikososyal destek</b> noktaları yaygınlaştı.</div><div class="item"><b>Anonim vaka</b>: Güvenli barınma ve iş bulma desteği.</div></div></li>
+                <li class="year"><div class="year-head"><div class="year-title">2023</div><div class="badge">Haklar</div></div><div class="items"><div class="item"><b>Hak bilinci</b> ve başvuru yolları eğitimleri.</div><div class="item"><b>Anonim vaka</b>: Delil toplama ve bildirim süreçlerine destek.</div></div></li>
+                <li class="year"><div class="year-head"><div class="year-title">2024</div><div class="badge">Birlik</div></div><div class="items"><div class="item"><b>Topluluk temelli</b> destek platformları büyüdü.</div><div class="item"><b>Anonim vaka</b>: Güvenli iletişim ve konum paylaşım rehberliği.</div></div></li>
+                <li class="year"><div class="year-head"><div class="year-title">2025</div><div class="badge">Umut</div></div><div class="items"><div class="item"><b>Dayanışma kampanyaları</b> ve gönüllü ağları güçlendi.</div><div class="item"><b>Anonim vaka</b>: Çok dilli bilgilendirme ve erişilebilirlik desteği.</div></div></li>
+            </ol>
+        </section>
+
+        <section class="section" aria-labelledby="data-title">
+            <div class="head">
+                <h2 id="data-title">2010–2025 Kadına Yönelik Şiddet – Yıllara Göre Oran (Yer Tutucu)</h2>
+                <div class="note">Bu tablo yer tutucu değerler içerir. Lütfen güvenilir kaynaklarla güncelleyin.</div>
+            </div>
+            <div class="table-wrap" role="region" aria-label="Yıllara göre oran tablosu">
+                <table aria-describedby="data-title">
+                    <thead>
+                        <tr>
+                            <th>Yıl</th>
+                            <th>Oran / Göstergeler</th>
+                            <th>Kaynak</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>2010</td><td><span class="pill">—</span></td><td class="src">—</td></tr>
+                        <tr><td>2011</td><td><span class="pill">—</span></td><td class="src">—</td></tr>
+                        <tr><td>2012</td><td><span class="pill">—</span></td><td class="src">—</td></tr>
+                        <tr><td>2013</td><td><span class="pill">—</span></td><td class="src">—</td></tr>
+                        <tr><td>2014</td><td><span class="pill">—</span></td><td class="src">—</td></tr>
+                        <tr><td>2015</td><td><span class="pill">—</span></td><td class="src">—</td></tr>
+                        <tr><td>2016</td><td><span class="pill">—</span></td><td class="src">—</td></tr>
+                        <tr><td>2017</td><td><span class="pill">—</span></td><td class="src">—</td></tr>
+                        <tr><td>2018</td><td><span class="pill">—</span></td><td class="src">—</td></tr>
+                        <tr><td>2019</td><td><span class="pill">—</span></td><td class="src">—</td></tr>
+                        <tr><td>2020</td><td><span class="pill">—</span></td><td class="src">—</td></tr>
+                        <tr><td>2021</td><td><span class="pill">—</span></td><td class="src">—</td></tr>
+                        <tr><td>2022</td><td><span class="pill">—</span></td><td class="src">—</td></tr>
+                        <tr><td>2023</td><td><span class="pill">—</span></td><td class="src">—</td></tr>
+                        <tr><td>2024</td><td><span class="pill">—</span></td><td class="src">—</td></tr>
+                        <tr><td>2025</td><td><span class="pill">—</span></td><td class="src">—</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="resources-title">
+            <div class="head">
+                <h2 id="resources-title">Yardım ve Kaynaklar</h2>
+                <div class="note">Acil durumdaysanız lütfen resmi hatları arayınız.</div>
+            </div>
+            <div class="grid" role="list">
+                <article class="card" role="listitem">
+                    <h3>112 Acil Yardım</h3>
+                    <div class="muted">Hayati risk içeren her durumda</div>
+                </article>
+                <article class="card" role="listitem">
+                    <h3>155 Polis İmdat</h3>
+                    <div class="muted">Güvenlik ve acil müdahale</div>
+                </article>
+                <article class="card" role="listitem">
+                    <h3>183 Sosyal Destek Hattı</h3>
+                    <div class="muted">Psikososyal, hukuki bilgilendirme ve yönlendirme</div>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="pledge-title">
+            <div class="head">
+                <h2 id="pledge-title">Söz veriyoruz</h2>
+                <div class="note">Şiddete karşı birlikte, eşitlik için kararlıyız.</div>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <h3>Gör</h3>
+                    <div>Şiddeti görünür kılmak için susmuyoruz.</div>
+                </article>
+                <article class="card">
+                    <h3>Dinle</h3>
+                    <div>İnanan, yargılamayan ve güçlendiren bir dil benimsiyoruz.</div>
+                </article>
+                <article class="card">
+                    <h3>Destek ol</h3>
+                    <div>Güvenli yönlendirme, dayanışma ve kaynak paylaşımı.</div>
+                </article>
+            </div>
+        </section>
+
+        <footer>
+            Bu sayfa bilgilendirme ve farkındalık amacıyla hazırlanmıştır. İçerik <strong>örnek ve anonim</strong> niteliktedir. Yardıma ihtiyacınız varsa resmi acil hatlara başvurunuz.
+        </footer>
+    </div>
+</body>
+</html>
+
+
